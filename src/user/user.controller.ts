@@ -1,4 +1,12 @@
-import { BadRequestException, Body, Controller, HttpCode, Post } from '@nestjs/common'
+import {
+	BadRequestException,
+	Body,
+	Controller,
+	HttpCode,
+	Post,
+	UsePipes,
+	ValidationPipe,
+} from '@nestjs/common'
 import { UserDto } from './dto/user.dto'
 import { UserService } from './user.service'
 import { USER_FOUND } from './user.constants'
@@ -15,6 +23,7 @@ export class UserController {
 		return this.userService.login(user)
 	}
 
+	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Post('register')
 	async register(@Body() userDto: UserDto) {
